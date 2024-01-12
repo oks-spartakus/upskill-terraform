@@ -1,0 +1,418 @@
+
+  # aws_cloudwatch_log_group.flow_log_group[0] will be destroyed
+  - resource "aws_cloudwatch_log_group" "flow_log_group" {
+      - arn               = "arn:aws:logs:eu-west-1:890769921003:log-group:DEV-All-Flow-Log" -> null
+      - id                = "DEV-All-Flow-Log" -> null
+      - name              = "DEV-All-Flow-Log" -> null
+      - retention_in_days = 0 -> null
+      - skip_destroy      = false -> null
+      - tags              = {
+          - "Owner" = "pkozlowski"
+        } -> null
+      - tags_all          = {
+          - "Owner" = "pkozlowski"
+        } -> null
+    }
+
+  # aws_flow_log.vpc_flow_log[0] will be destroyed
+  - resource "aws_flow_log" "vpc_flow_log" {
+      - arn                      = "arn:aws:ec2:eu-west-1:890769921003:vpc-flow-log/fl-0ad7f904d289fef46" -> null
+      - iam_role_arn             = "arn:aws:iam::890769921003:role/DEVAllVPCFlowLogRole" -> null
+      - id                       = "fl-0ad7f904d289fef46" -> null
+      - log_destination          = "arn:aws:logs:eu-west-1:890769921003:log-group:DEV-All-Flow-Log" -> null
+      - log_destination_type     = "cloud-watch-logs" -> null
+      - log_format               = "${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}" -> null
+      - log_group_name           = "DEV-All-Flow-Log" -> null
+      - max_aggregation_interval = 600 -> null
+      - tags                     = {} -> null
+      - tags_all                 = {} -> null
+      - traffic_type             = "ALL" -> null
+      - vpc_id                   = "vpc-07cdd2641ab727911" -> null
+    }
+
+  # aws_iam_role.iam_log_role[0] will be destroyed
+  - resource "aws_iam_role" "iam_log_role" {
+      - arn                   = "arn:aws:iam::890769921003:role/DEVAllVPCFlowLogRole" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "vpc-flow-logs.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2023-11-10T08:38:29Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "DEVAllVPCFlowLogRole" -> null
+      - managed_policy_arns   = [] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "DEVAllVPCFlowLogRole" -> null
+      - path                  = "/" -> null
+      - tags                  = {
+          - "Owner" = "pkozlowski"
+        } -> null
+      - tags_all              = {
+          - "Owner" = "pkozlowski"
+        } -> null
+      - unique_id             = "AROA46ZQGKPVR6S27425R" -> null
+
+      - inline_policy {
+          - name   = "DEVAllVPCFlowLogPolicy" -> null
+          - policy = jsonencode(
+                {
+                  - Statement = [
+                      - {
+                          - Action   = [
+                              - "logs:PutLogEvents",
+                              - "logs:DescribeLogStreams",
+                              - "logs:DescribeLogGroups",
+                              - "logs:CreateLogStream",
+                              - "logs:CreateLogGroup",
+                            ]
+                          - Effect   = "Allow"
+                          - Resource = "*"
+                        },
+                    ]
+                  - Version   = "2012-10-17"
+                }
+            ) -> null
+        }
+    }
+
+  # aws_iam_role_policy.log_policy[0] will be destroyed
+  - resource "aws_iam_role_policy" "log_policy" {
+      - id     = "DEVAllVPCFlowLogRole:DEVAllVPCFlowLogPolicy" -> null
+      - name   = "DEVAllVPCFlowLogPolicy" -> null
+      - policy = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = [
+                          - "logs:PutLogEvents",
+                          - "logs:DescribeLogStreams",
+                          - "logs:DescribeLogGroups",
+                          - "logs:CreateLogStream",
+                          - "logs:CreateLogGroup",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = "*"
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - role   = "DEVAllVPCFlowLogRole" -> null
+    }
+
+  # aws_internet_gateway.default will be destroyed
+  - resource "aws_internet_gateway" "default" {
+      - arn      = "arn:aws:ec2:eu-west-1:890769921003:internet-gateway/igw-04128a46f92e90dbe" -> null
+      - id       = "igw-04128a46f92e90dbe" -> null
+      - owner_id = "890769921003" -> null
+      - tags     = {
+          - "Name"  = "pkozlowski-Dev-All-IG"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - tags_all = {
+          - "Name"  = "pkozlowski-Dev-All-IG"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - vpc_id   = "vpc-07cdd2641ab727911" -> null
+    }
+
+  # aws_main_route_table_association.default will be destroyed
+  - resource "aws_main_route_table_association" "default" {
+      - id                      = "rtbassoc-0c55609997c32acc1" -> null
+      - original_route_table_id = "rtb-076e522d9032155ce" -> null
+      - route_table_id          = "rtb-0d088abe78c95890c" -> null
+      - vpc_id                  = "vpc-07cdd2641ab727911" -> null
+    }
+
+  # aws_network_acl.private will be destroyed
+  - resource "aws_network_acl" "private" {
+      - arn        = "arn:aws:ec2:eu-west-1:890769921003:network-acl/acl-03236924b14301676" -> null
+      - egress     = [
+          - {
+              - action          = "allow"
+              - cidr_block      = "0.0.0.0/0"
+              - from_port       = 0
+              - icmp_code       = 0
+              - icmp_type       = 0
+              - ipv6_cidr_block = ""
+              - protocol        = "-1"
+              - rule_no         = 100
+              - to_port         = 0
+            },
+        ] -> null
+      - id         = "acl-03236924b14301676" -> null
+      - ingress    = [
+          - {
+              - action          = "allow"
+              - cidr_block      = "0.0.0.0/0"
+              - from_port       = 0
+              - icmp_code       = 0
+              - icmp_type       = 0
+              - ipv6_cidr_block = ""
+              - protocol        = "-1"
+              - rule_no         = 100
+              - to_port         = 0
+            },
+        ] -> null
+      - owner_id   = "890769921003" -> null
+      - subnet_ids = [] -> null
+      - tags       = {
+          - "Name"  = "pkozlowski-Dev-All-Private"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - tags_all   = {
+          - "Name"  = "pkozlowski-Dev-All-Private"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - vpc_id     = "vpc-07cdd2641ab727911" -> null
+    }
+
+  # aws_network_acl.public will be destroyed
+  - resource "aws_network_acl" "public" {
+      - arn        = "arn:aws:ec2:eu-west-1:890769921003:network-acl/acl-0d8b0096fcdaf69de" -> null
+      - egress     = [
+          - {
+              - action          = "allow"
+              - cidr_block      = "0.0.0.0/0"
+              - from_port       = 0
+              - icmp_code       = 0
+              - icmp_type       = 0
+              - ipv6_cidr_block = ""
+              - protocol        = "-1"
+              - rule_no         = 100
+              - to_port         = 0
+            },
+        ] -> null
+      - id         = "acl-0d8b0096fcdaf69de" -> null
+      - ingress    = [
+          - {
+              - action          = "allow"
+              - cidr_block      = "0.0.0.0/0"
+              - from_port       = 0
+              - icmp_code       = 0
+              - icmp_type       = 0
+              - ipv6_cidr_block = ""
+              - protocol        = "-1"
+              - rule_no         = 100
+              - to_port         = 0
+            },
+        ] -> null
+      - owner_id   = "890769921003" -> null
+      - subnet_ids = [] -> null
+      - tags       = {
+          - "Name"  = "pkozlowski-Dev-All-Public"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - tags_all   = {
+          - "Name"  = "pkozlowski-Dev-All-Public"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - vpc_id     = "vpc-07cdd2641ab727911" -> null
+    }
+
+  # aws_network_acl_rule.private_egress will be destroyed
+  - resource "aws_network_acl_rule" "private_egress" {
+      - cidr_block     = "0.0.0.0/0" -> null
+      - egress         = true -> null
+      - from_port      = 0 -> null
+      - id             = "nacl-1864138682" -> null
+      - network_acl_id = "acl-03236924b14301676" -> null
+      - protocol       = "-1" -> null
+      - rule_action    = "allow" -> null
+      - rule_number    = 100 -> null
+      - to_port        = 0 -> null
+    }
+
+  # aws_network_acl_rule.private_ingress will be destroyed
+  - resource "aws_network_acl_rule" "private_ingress" {
+      - cidr_block     = "0.0.0.0/0" -> null
+      - egress         = false -> null
+      - from_port      = 0 -> null
+      - id             = "nacl-1879410032" -> null
+      - network_acl_id = "acl-03236924b14301676" -> null
+      - protocol       = "-1" -> null
+      - rule_action    = "allow" -> null
+      - rule_number    = 100 -> null
+      - to_port        = 0 -> null
+    }
+
+  # aws_network_acl_rule.public_egress will be destroyed
+  - resource "aws_network_acl_rule" "public_egress" {
+      - cidr_block     = "0.0.0.0/0" -> null
+      - egress         = true -> null
+      - from_port      = 0 -> null
+      - id             = "nacl-675522672" -> null
+      - network_acl_id = "acl-0d8b0096fcdaf69de" -> null
+      - protocol       = "-1" -> null
+      - rule_action    = "allow" -> null
+      - rule_number    = 100 -> null
+      - to_port        = 0 -> null
+    }
+
+  # aws_network_acl_rule.public_ingress will be destroyed
+  - resource "aws_network_acl_rule" "public_ingress" {
+      - cidr_block     = "0.0.0.0/0" -> null
+      - egress         = false -> null
+      - from_port      = 0 -> null
+      - id             = "nacl-200536329" -> null
+      - network_acl_id = "acl-0d8b0096fcdaf69de" -> null
+      - protocol       = "-1" -> null
+      - rule_action    = "allow" -> null
+      - rule_number    = 100 -> null
+      - to_port        = 0 -> null
+    }
+
+  # aws_route.public will be destroyed
+  - resource "aws_route" "public" {
+      - destination_cidr_block = "0.0.0.0/0" -> null
+      - gateway_id             = "igw-04128a46f92e90dbe" -> null
+      - id                     = "r-rtb-0bac4f8a0d2ab12df1080289494" -> null
+      - origin                 = "CreateRoute" -> null
+      - route_table_id         = "rtb-0bac4f8a0d2ab12df" -> null
+      - state                  = "active" -> null
+    }
+
+  # aws_route_table.default will be destroyed
+  - resource "aws_route_table" "default" {
+      - arn              = "arn:aws:ec2:eu-west-1:890769921003:route-table/rtb-0d088abe78c95890c" -> null
+      - id               = "rtb-0d088abe78c95890c" -> null
+      - owner_id         = "890769921003" -> null
+      - propagating_vgws = [] -> null
+      - route            = [] -> null
+      - tags             = {
+          - "Name"  = "pkozlowski-Dev-All-DefaultRouteTable"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - tags_all         = {
+          - "Name"  = "pkozlowski-Dev-All-DefaultRouteTable"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - vpc_id           = "vpc-07cdd2641ab727911" -> null
+    }
+
+  # aws_route_table.public will be destroyed
+  - resource "aws_route_table" "public" {
+      - arn              = "arn:aws:ec2:eu-west-1:890769921003:route-table/rtb-0bac4f8a0d2ab12df" -> null
+      - id               = "rtb-0bac4f8a0d2ab12df" -> null
+      - owner_id         = "890769921003" -> null
+      - propagating_vgws = [] -> null
+      - route            = [
+          - {
+              - carrier_gateway_id         = ""
+              - cidr_block                 = "0.0.0.0/0"
+              - core_network_arn           = ""
+              - destination_prefix_list_id = ""
+              - egress_only_gateway_id     = ""
+              - gateway_id                 = "igw-04128a46f92e90dbe"
+              - ipv6_cidr_block            = ""
+              - local_gateway_id           = ""
+              - nat_gateway_id             = ""
+              - network_interface_id       = ""
+              - transit_gateway_id         = ""
+              - vpc_endpoint_id            = ""
+              - vpc_peering_connection_id  = ""
+            },
+        ] -> null
+      - tags             = {
+          - "Name"  = "pkozlowski-Dev-All-PublicRouteTable"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - tags_all         = {
+          - "Name"  = "pkozlowski-Dev-All-PublicRouteTable"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - vpc_id           = "vpc-07cdd2641ab727911" -> null
+    }
+
+  # aws_vpc.default will be destroyed
+  - resource "aws_vpc" "default" {
+      - arn                                  = "arn:aws:ec2:eu-west-1:890769921003:vpc/vpc-07cdd2641ab727911" -> null
+      - assign_generated_ipv6_cidr_block     = false -> null
+      - cidr_block                           = "10.150.0.0/22" -> null
+      - default_network_acl_id               = "acl-05ab31c098d69b9ff" -> null
+      - default_route_table_id               = "rtb-0d088abe78c95890c" -> null
+      - default_security_group_id            = "sg-01b6005f7764cabc4" -> null
+      - dhcp_options_id                      = "dopt-4aa0f42f" -> null
+      - enable_dns_hostnames                 = true -> null
+      - enable_dns_support                   = true -> null
+      - enable_network_address_usage_metrics = false -> null
+      - id                                   = "vpc-07cdd2641ab727911" -> null
+      - instance_tenancy                     = "default" -> null
+      - ipv6_netmask_length                  = 0 -> null
+      - main_route_table_id                  = "rtb-0d088abe78c95890c" -> null
+      - owner_id                             = "890769921003" -> null
+      - tags                                 = {
+          - "Name"  = "pkozlowski-Dev-All-VPC"
+          - "Owner" = "pkozlowski"
+        } -> null
+      - tags_all                             = {
+          - "Name"  = "pkozlowski-Dev-All-VPC"
+          - "Owner" = "pkozlowski"
+        } -> null
+    }
+
+Plan: 0 to add, 0 to change, 16 to destroy.
+
+Changes to Outputs:
+  - db_private_route_table_association_ids             = [] -> null
+  - eip_nat_gateway_ids                                = [] -> null
+  - eip_nat_gateway_private_ips                        = [] -> null
+  - eip_nat_gateway_public_ips                         = [] -> null
+  - internet_gateway_id                                = "igw-04128a46f92e90dbe" -> null
+  - log_group_name                                     = [
+      - "DEV-All-Flow-Log",
+    ] -> null
+  - nat_gateway_allocation_ids                         = [] -> null
+  - nat_gateway_ids                                    = [] -> null
+  - nat_gateway_network_interface_ids                  = [] -> null
+  - nat_gateway_private_ips                            = [] -> null
+  - nat_gateway_public_ips                             = [] -> null
+  - nat_gateway_subnet_ids                             = [] -> null
+  - private_db_subnet_arns                             = [] -> null
+  - private_db_subnet_cidr_blocks                      = [] -> null
+  - private_db_subnet_group_name                       = [] -> null
+  - private_db_subnet_ids                              = [] -> null
+  - private_egress_network_acl_rule_id                 = "nacl-1864138682" -> null
+  - private_ingress_network_acl_rule_id                = "nacl-1879410032" -> null
+  - private_network_acl_id                             = "acl-03236924b14301676" -> null
+  - private_route_table_association_ids                = [] -> null
+  - private_route_table_ids                            = [] -> null
+  - private_subnet_arns                                = [] -> null
+  - private_subnet_availability_zones                  = [] -> null
+  - private_subnet_cidr_blocks                         = [] -> null
+  - private_subnet_ids                                 = [] -> null
+  - public_egress_network_acl_rule_id                  = "nacl-675522672" -> null
+  - public_ingress_network_acl_rule_id                 = "nacl-200536329" -> null
+  - public_network_acl_id                              = "acl-0d8b0096fcdaf69de" -> null
+  - public_route_table_association_ids                 = [] -> null
+  - public_route_table_id                              = "rtb-0bac4f8a0d2ab12df" -> null
+  - public_subnet_arns                                 = [] -> null
+  - public_subnet_availability_zones                   = [] -> null
+  - public_subnet_cidr_blocks                          = [] -> null
+  - public_subnet_ids                                  = [] -> null
+  - vpc_arn                                            = "arn:aws:ec2:eu-west-1:890769921003:vpc/vpc-07cdd2641ab727911" -> null
+  - vpc_cidr_block                                     = "10.150.0.0/22" -> null
+  - vpc_default_network_acl_id                         = "acl-05ab31c098d69b9ff" -> null
+  - vpc_default_route_table_id                         = "rtb-0d088abe78c95890c" -> null
+  - vpc_default_security_groupublic_route_table_idp_id = "sg-01b6005f7764cabc4" -> null
+  - vpc_enable_dns_hostnames                           = true -> null
+  - vpc_enable_dns_support                             = true -> null
+  - vpc_id                                             = "vpc-07cdd2641ab727911" -> null
+  - vpc_instance_tenancy                               = "default" -> null
+  - vpc_main_route_table_id                            = "rtb-0d088abe78c95890c" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: 
